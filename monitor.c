@@ -186,7 +186,7 @@ void monitor_write_hex(u32int n)
 
 void monitor_write_dec(u32int n)
 {
-/*
+
     if (n == 0)
     {
         monitor_put('0');
@@ -211,7 +211,7 @@ void monitor_write_dec(u32int n)
     {
         c2[i--] = c[j++];
     }
-    monitor_write(c2);*/
+    monitor_write(c2);
 
 monitor_write("Interrupted");
 }

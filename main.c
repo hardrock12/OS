@@ -4,6 +4,8 @@
 #include "monitor.h"
 #include "descriptor_tables.h"
 #include "timer.h"
+#include "mouse.h"
+
 
 int main()
 {
@@ -17,5 +19,6 @@ int main()
     asm volatile("int $0x3");
     asm volatile("int $0x4");
     init_timer(50);
+     mouse_install();
     return 0;
 }
