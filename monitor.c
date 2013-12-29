@@ -213,5 +213,4 @@ void monitor_write_dec(u32int n)
     }
     monitor_write(c2);
 
-monitor_write("Interrupted");
 }

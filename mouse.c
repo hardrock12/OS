@@ -28,7 +28,10 @@ void mouse_handler(struct regs *a_r) //struct regs *a_r (not used but just there
       mouse_byte[2]=inb(0x60);
       mouse_x=mouse_byte[1];
       mouse_y=mouse_byte[2];
-      monitor_write_dec((u32int)mouse_x);
+      monitor_write_hex(mouse_x);
+    monitor_write(',');
+    monitor_write_hex(mouse_y);
+    monitor_write('\n');
       mouse_cycle=0;
       break;
   }

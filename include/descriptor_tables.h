@@ -1,21 +1,14 @@
-//
+// 
 // descriptor_tables.h - Defines the interface for initialising the GDT and IDT.
 //                       Also defines needed structures.
 //                       Based on code from Bran's kernel development tutorials.
 //                       Rewritten for JamesM's kernel development tutorials.
 //
-#define PIC1_CMD                    0x20
-#define PIC1_DATA                   0x21
-#define PIC2_CMD                    0xA0
-#define PIC2_DATA                   0xA1
-#define PIC_READ_IRR                0x0a    /* OCW3 irq ready next CMD read */
-#define PIC_READ_ISR                0x0b    /* OCW3 irq service next CMD read */
 
 #include "common.h"
 
 // Initialisation function is publicly accessible.
 void init_descriptor_tables();
-
 
 // This structure contains the value of one GDT entry.
 // We use the attribute 'packed' to tell GCC not to change
@@ -98,4 +91,21 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+extern void irq0 ();
+extern void irq1 ();
+extern void irq2 ();
+extern void irq3 ();
+extern void irq4 ();
+extern void irq5 ();
+extern void irq6 ();
+extern void irq7 ();
+extern void irq8 ();
+extern void irq9 ();
+extern void irq10();
+extern void irq11();
+extern void irq12();
+extern void irq13();
+extern void irq14();
+extern void irq15();
+
 

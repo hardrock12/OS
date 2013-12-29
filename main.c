@@ -5,9 +5,9 @@
 #include "descriptor_tables.h"
 #include "timer.h"
 #include "mouse.h"
+#include "key.h"
 
-
-int main()
+int main(struct multiboot *mboot_ptr)
 {
     // Initialise all the ISRs and segmentation
     init_descriptor_tables();
@@ -18,8 +18,12 @@ int main()
 
     asm volatile("int $0x3");
     asm volatile("int $0x4");
-    asm volatile("int $0x9");
-        init_timer(50);
-    // mouse_install();
+
+    asm volatile("sti");
+    //init_timer(50);
+    //mouse_install();
+installkb();
+
+
     return 0;
 }

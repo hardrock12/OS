@@ -13,7 +13,6 @@ static void timer_callback(registers_t regs)
     monitor_write("Tick: ");
     monitor_write_dec(tick);
     monitor_write("\n");
-return;
 }
 
 void init_timer(u32int frequency)

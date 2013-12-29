@@ -73,10 +73,16 @@ gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector -finlin
 echo "bisr"
 echo "=================================================================================================================="
 gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector -finline-functions -nostdinc -fno-builtin -I./include -c -o isr.o isr.c
+echo "bkey"
+echo "=================================================================================================================="
+gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector -finline-functions -nostdinc -fno-builtin -I./include -c -o key.o key.c
 
 echo "linking........."
 echo "=================================================================================================================="
-ld -T link.ld  -o ./iso/boot/kernel.bin start.o main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o
+ld -T link.ld  -o ./iso/boot/kernel.bin start.o main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o key.o
+ld -T link.ld  -o kernel.bin start.o main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o key.o
+echo  "Running"
+qemu --kernel kernel.bin
 rm *.o
 
 		
