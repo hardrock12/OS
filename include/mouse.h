@@ -1,5 +1,5 @@
 #ifndef __MOUSE_H
 #define __MOUSE_H
 
-
-#endif 
+void mouse_install();
+#endif

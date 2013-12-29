@@ -1,5 +1,5 @@
 //
-// descriptor_tables.c - Initialises the GDT and IDT, and defines the 
+// descriptor_tables.c - Initialises the GDT and IDT, and defines the
 //                       default ISR and IRQ handler.
 //                       Based on code from Bran's kernel development tutorials.
 //                       Rewritten for JamesM's kernel development tutorials.
@@ -58,7 +58,7 @@ static void gdt_set_gate(s32int num, u32int base, u32int limit, u8int access, u8
 
     gdt_entries[num].limit_low   = (limit & 0xFFFF);
     gdt_entries[num].granularity = (limit >> 16) & 0x0F;
-    
+
     gdt_entries[num].granularity |= gran & 0xF0;
     gdt_entries[num].access      = access;
 }
@@ -69,6 +69,18 @@ static void init_idt()
     idt_ptr.base  = (u32int)&idt_entries;
 
     memset(&idt_entries, 0, sizeof(idt_entry_t)*256);
+
+      // Remap the irq table.
+    outb(PIC1_CMD, 0x11);
+    outb(PIC2_CMD, 0x11);
+    outb(PIC1_DATA, 0x20);
+    outb(PIC2_DATA, 0x28);
+    outb(PIC1_DATA, 0x04);
+    outb(PIC2_DATA, 0x02);
+    outb(PIC1_DATA, 0x01);
+    outb(PIC2_DATA, 0x01);
+    outb(PIC1_DATA, 0x0);
+    outb(PIC2_DATA, 0x0);
 
     idt_set_gate( 0, (u32int)isr0 , 0x08, 0x8E);
     idt_set_gate( 1, (u32int)isr1 , 0x08, 0x8E);
@@ -105,6 +117,17 @@ static void init_idt()
 
     idt_flush((u32int)&idt_ptr);
 }
+
+
+/*void fault_handler ( struct regs *r )
+
+{
+        if ( r->int_no < 32 )
+        {
+                printline ( exception_messages[r->int_no] );
+                printline ( "Exception, System halted" );
+        }
+}*/
 
 static void idt_set_gate(u8int num, u32int base, u16int sel, u8int flags)
 {

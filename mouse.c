@@ -2,6 +2,7 @@
 #include "system.h"
 #include "common.h"
 #include "isr.h"
+#include "monitor.h"
 
 
 //License: Use as you wish, except to cause damage
@@ -27,6 +28,7 @@ void mouse_handler(struct regs *a_r) //struct regs *a_r (not used but just there
       mouse_byte[2]=inb(0x60);
       mouse_x=mouse_byte[1];
       mouse_y=mouse_byte[2];
+      monitor_write_dec((u32int)mouse_x);
       mouse_cycle=0;
       break;
   }
@@ -74,7 +76,7 @@ inline void mouse_write(u8int a_write) //unsigned char
 u8int mouse_read()
 {
   //Get's response from mouse
-  mouse_wait(0); 
+  mouse_wait(0);
   return inb(0x60);
 }
 
@@ -85,7 +87,7 @@ void mouse_install()
   //Enable the auxiliary mouse device
   mouse_wait(1);
   outb(0x64, 0xA8);
-  
+
   //Enable the interrupts
   mouse_wait(1);
   outb(0x64, 0x20);
@@ -95,11 +97,11 @@ void mouse_install()
   outb(0x64, 0x60);
   mouse_wait(1);
   outb(0x60, _status);
-  
+
   //Tell the mouse to use default settings
   mouse_write(0xF6);
   mouse_read();  //Acknowledge
-  
+
   //Enable the mouse
   mouse_write(0xF4);
   mouse_read();  //Acknowledge

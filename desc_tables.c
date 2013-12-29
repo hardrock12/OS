@@ -1,5 +1,5 @@
 //
-// descriptor_tables.c - Initialises the GDT and IDT, and defines the 
+// descriptor_tables.c - Initialises the GDT and IDT, and defines the
 //                       default ISR and IRQ handler.
 //                       Based on code from Bran's kernel development tutorials.
 //                       Rewritten for JamesM's kernel development tutorials.
@@ -15,6 +15,7 @@
 //extern void idt_flush(u32int);
 // Internal function prototypes.
 static void init_gdt();
+
 static void init_idt();
 static void gdt_set_gate(s32int,u32int,u32int,u8int,u8int);
 static void idt_set_gate(u8int,u32int,u16int,u8int);
@@ -59,7 +60,7 @@ static void gdt_set_gate(s32int num, u32int base, u32int limit, u8int access, u8
 
     gdt_entries[num].limit_low   = (limit & 0xFFFF);
     gdt_entries[num].granularity = (limit >> 16) & 0x0F;
-    
+
     gdt_entries[num].granularity |= gran & 0xF0;
     gdt_entries[num].access      = access;
 }

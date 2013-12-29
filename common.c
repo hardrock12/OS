@@ -3,6 +3,7 @@
 
 #include "common.h"
 
+
 // Write a byte out to the specified port.
 void outb(u16int port, u8int value)
 {
@@ -13,6 +14,7 @@ u8int inb(u16int port)
 {
     u8int ret;
     asm volatile("inb %1, %0" : "=a" (ret) : "dN" (port));
+
     return ret;
 }
 
@@ -38,7 +40,7 @@ void memset(u8int *dest, u8int val, u32int len)
     for ( ; len != 0; len--) *temp++ = val;
 }
 
-// Compare two strings. Should return -1 if 
+// Compare two strings. Should return -1 if
 // str1 < str2, 0 if they are equal or 1 otherwise.
 int strcmp(char *str1, char *str2)
 {
@@ -56,7 +58,7 @@ int strcmp(char *str1, char *str2)
       // why did the loop exit?
       if( (str1[i] == '\0' && str2[i] != '\0') || (str1[i] != '\0' && str2[i] == '\0') )
           failed = 1;
-  
+
       return failed;
 }
 

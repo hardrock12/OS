@@ -18,7 +18,8 @@ int main()
 
     asm volatile("int $0x3");
     asm volatile("int $0x4");
-    init_timer(50);
-     mouse_install();
+    asm volatile("int $0x9");
+        init_timer(50);
+    // mouse_install();
     return 0;
 }
