@@ -199,5 +199,5 @@ void page_fault(registers_t regs)
     monitor_write(") at 0x");
     monitor_write_hex(faulting_address);
     monitor_write("\n");
-   // PANIC("Page fault");
+  // PANIC("Page fault");
 }

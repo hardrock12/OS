@@ -18,13 +18,13 @@ int main(struct multiboot *mboot_ptr)
     // Write out a sample string
     monitor_write("Hello, world!\n");
 
-    asm volatile("int $0x3");
-    asm volatile("int $0x4");
+   // asm volatile("int $0x3");
+    //asm volatile("int $0x4");
 
-    asm volatile("sti");
+    //asm volatile("sti");
     //init_timer(50);
     //mouse_install();
-installkb();
+      // installkb();
 
 initialise_paging();
 
