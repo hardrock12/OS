@@ -5,6 +5,7 @@
 #include "descriptor_tables.h"
 #include "timer.h"
 #include "paging.h"
+#include "hard.h"
 
 int main(struct multiboot *mboot_ptr)
 {
@@ -29,6 +30,6 @@ int main(struct multiboot *mboot_ptr)
     u32int d = kmalloc(12);
     monitor_write(", d: ");
     monitor_write_hex(d);
-
+identify();
     return 0;
 }
