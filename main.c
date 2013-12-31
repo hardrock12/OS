@@ -6,6 +6,7 @@
 #include "timer.h"
 #include "paging.h"
 #include "hard.h"
+#include "common.h"
 
 int main(struct multiboot *mboot_ptr)
 {
@@ -30,6 +31,11 @@ int main(struct multiboot *mboot_ptr)
     u32int d = kmalloc(12);
     monitor_write(", d: ");
     monitor_write_hex(d);
+    monitor_clear();
+  //  monitor_write_dec(bitque(8,0,3));
+
+   // monitor_write_dec(bitque(16,0,4));
+  //  monitor_write_dec(bitque(16,2,4));
 identify();
     return 0;
 }

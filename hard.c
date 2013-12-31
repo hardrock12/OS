@@ -1,6 +1,6 @@
 #include "hard.h"
 #include "common.h"
-#define 0x1F2 sec
+#define sec 0x1F2
 
 void identify()
 {
@@ -21,22 +21,40 @@ At that point, if ERR is clear, the data is ready to read from the Data port (0x
 
 */
 u16int id[256];
+//outb(0x1F6,0xB0);
+monitor_clear();
   outb(0x1F6,0xA0); //selecteing master drive
-  for(int i=0;i<4;i++)
-  {outb(sec+i,0x0);}
+  int i=0;
+  while(i<4)
+  {outb(sec+i,0x0);i++;}
   outb(0x1F2,0xEC);
   int flag=0 ;
-  while(inb(0x1F7)==8)//||flag++||inb(0x1F7)==1)
-  {}
-  if (flag==0)
-  for(i=0;i<256;i++)
-  {id[i]=inw(0x1F0);}
+  monitor_write_hex(inb(0x1F7));
+  while(inb(0x1F7)!=8)//||flag++||inb(0x1F7)==1)
+  {
+  monitor_write("waiting");
+  }
+  while(inb(0x1F7)!=1)//||flag++||inb(0x1F7)==1)
+  {
+  monitor_write("waiting: for error flag");
+  }
+  //if (flag==0)
+  //monitor_clear();
+  /*i=0;
+  while(i<256)
+  {id[i]=inw(0x1F0);
+  monitor_put('     ');
+  monitor_write_dec(i);
+  monitor_put(':');
+  monitor_write_hex(id[i]);
+
+  i++;
+  }
   monitor_write("done storing words");
-  for(i=0;i<256;i++)
-  {monitor_write_hex(id[i]);}
 
 
 
 
 
+*/
 }
