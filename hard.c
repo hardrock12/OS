@@ -20,29 +20,55 @@ At that point, if ERR is clear, the data is ready to read from the Data port (0x
 . Read 256 words, and store them.
 
 */
+
+
+/*// source:osdev
+
+Bit	 Abbreviation	 Function
+0	 ERR	 Indicates an error occurred. Send a new command to clear it (or nuke it with a Software Reset).
+3	 DRQ	 Set when the drive has PIO data to transfer, or is ready to accept PIO data.
+4	 SRV	 Overlapped Mode Service Request.
+5	 DF	 Drive Fault Error (does not set ERR).
+6	 RDY	 Bit is clear when drive is spun down, or after an error. Set otherwise.
+7	 BSY	 Indicates the drive is preparing to send/receive data (wait for it to clear). In case of 'hang' (it never clears), do a software reset.
+*/
 u16int id[256];
 //outb(0x1F6,0xB0);
 monitor_clear();
   outb(0x1F6,0xA0); //selecteing master drive
   int i=0;
   while(i<4)
-  {outb(sec+i,0x0);i++;}
+  {outb(sec+i,0x0);i++;};
   outb(0x1F2,0xEC);
   int flag=0 ;
+
+
+
   monitor_write_hex(inb(0x1F7));
-  while(inb(0x1F7)!=8)//||flag++||inb(0x1F7)==1)
+  while(flag==0)
   {
+ if(1|| bitque(inb(0x1F7),0,7)&&(bitque(inb(0x1F7),0,3)||bitque(inb(0x1F7),0,0)))
+{
+
+ flag=1;}
+ monitor_write("polling");
+ };
+
+
+  //while(inb(0x1F7)!=8)//||flag++||inb(0x1F7)==1)
+  //{
   monitor_write("waiting");
-  }
-  while(inb(0x1F7)!=1)//||flag++||inb(0x1F7)==1)
-  {
-  monitor_write("waiting: for error flag");
-  }
+
+ // }
+ // while(inb(0x1F7)!=1)//||flag++||inb(0x1F7)==1)
+  //{
+ // monitor_write("waiting: for error flag");
+ // }
   //if (flag==0)
   //monitor_clear();
-  /*i=0;
-  while(i<256)
-  {id[i]=inw(0x1F0);
+  i=0;
+  while(i<50){id[i]=inw(0x1F0);
+
   monitor_put('     ');
   monitor_write_dec(i);
   monitor_put(':');
@@ -52,9 +78,4 @@ monitor_clear();
   }
   monitor_write("done storing words");
 
-
-
-
-
-*/
 }

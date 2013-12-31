@@ -25,17 +25,13 @@ int main(struct multiboot *mboot_ptr)
     monitor_write_hex(b);
     monitor_write("\nc: ");
     monitor_write_hex(c);
-
+init_timer(50);
     kfree(c);
     kfree(b);
     u32int d = kmalloc(12);
     monitor_write(", d: ");
     monitor_write_hex(d);
-    monitor_clear();
-  //  monitor_write_dec(bitque(8,0,3));
 
-   // monitor_write_dec(bitque(16,0,4));
-  //  monitor_write_dec(bitque(16,2,4));
 identify();
     return 0;
 }

@@ -2,12 +2,32 @@
 //             From JamesM's kernel development tutorials.
 
 #include "common.h"
+#include "timer.h"
+#include "monitor.h"
 u32int curdata=0;
+u32int time_val_m_s=0;
 // Write a byte out to the specified port.
 void outb(u16int port, u8int value)
 {
     asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));
 }
+void wait(u32int m_sec)
+{
+
+u32int *piv=(int*)0x40001000;
+
+u32int curtime=*piv;
+
+while(*piv-curtime<=m_sec)
+{
+
+monitor_write_dec(*piv);}
+}
+
+
+
+
+
 
 u8int bitque(u32int data,const int sz,int check_bit)
 {
@@ -15,9 +35,9 @@ u8int bitque(u32int data,const int sz,int check_bit)
     {
     curdata =data;
     }
-    monitor_put('\n');
-    monitor_write_hex(curdata);
-    u32int pow=1;
+    //monitor_put('\n');
+  //  monitor_write_hex(curdata);
+   u32int pow=1;
     while(check_bit>0)
     {
     pow*=2;
@@ -25,9 +45,9 @@ u8int bitque(u32int data,const int sz,int check_bit)
 
     check_bit--;
     }
-    monitor_write_hex(pow);
-    monitor_put(' ');
-    monitor_write_hex(curdata&pow);
+   // monitor_write_hex(pow);
+   // monitor_put(' ');
+   // monitor_write_hex(curdata&pow);
     if((curdata&pow)==pow)
     {
     return 1;

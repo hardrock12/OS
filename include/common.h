@@ -16,9 +16,9 @@ typedef          char  s8int;
 void outb(u16int port, u8int value);
 u8int inb(u16int port);
 u16int inw(u16int port);
-extern u32int curdata;
+//extern u32int curdata;
 u8int  bitque(u32int data,const int sz,int check_bit);
-
+void wait(u32int m_sec);
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);
 #define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))
 
