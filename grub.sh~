@@ -1,4 +1,0 @@
-grub-mkrescue -o myos.iso iso
-vboxmanage startvm unknown
-git push gcode
-
