@@ -7,6 +7,7 @@
 #include "paging.h"
 #include "hard.h"
 #include "common.h"
+#include "runtimecoding.h"
 
 int main(struct multiboot *mboot_ptr)
 {
@@ -32,6 +33,10 @@ init_timer(50);
     monitor_write(", d: ");
     monitor_write_hex(d);
 
-identify();
+
+
+u32int foo=0x21F;
+monitor_write_dec((encode(foo,32)));
+//identify();
     return 0;
 }
