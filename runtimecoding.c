@@ -1,6 +1,9 @@
 #include "runtimecoding.h"
 #include "common.h"
-#define version 2.0
+#define version 2
+
+
+
 u32int encode(u32int source,u32int sz)
 {
 //first layer
@@ -13,7 +16,7 @@ u32int result=0;                                 // detect run by symbol 00
 u8int marker=0x0;
 u8int layer1[32];
 while(i<32)
-{monitor_write_dec((source>>i)&0X1);
+{monitor_write_dec((source>>i)&0X3);
 
 i++;}
 i=0;
@@ -26,41 +29,35 @@ i=0;
 
 while(i<32)
 {
-if(((source>>i)&0X1)==temp)
+if(((source>>i)&0X3)==temp)
 {
-monitor_write("doing layer :");
+monitor_write("X:");
 //monitor_put('\n');
 monitor_write_dec(marker);
 layer1[marker]=layer1[marker]+1;
 monitor_write_dec(layer1[marker]);
 
-monitor_put('\n');
+//monitor_put('\n');
+s("  ");
+i++;
 }
 
 else{
-if (temp==1)
-{
-temp=0;
-
-
-}
-else
-{
-
-
-temp=1;}
+temp+=1;
+temp%=4;
 
 
 marker++;
 }
 
 
-i++;
 }
 
 i=0;
-while(i!=marker)
-{if(layer1[i]>9)
+while(i<=marker)
+{monitor_write_dec(layer1[i]);
+s(" ");
+if(layer1[i]>9)
 {
   result*=100;
 }
@@ -72,7 +69,7 @@ result+=layer1[i];
 i++;
 
 }
-
+s("\n");
 
 //u32int result;
 return result ;

@@ -32,11 +32,15 @@ init_timer(50);
     u32int d = kmalloc(12);
     monitor_write(", d: ");
     monitor_write_hex(d);
-
+install_kb();
 
 
 u32int foo=0x21F;
 monitor_write_dec((encode(foo,32)));
+s("                                            \n");
+monitor_write_dec(encode(encode(foo,32),32));
+s("                                            \n");
+monitor_write_dec(encode(encode(encode(foo,32),32),32));
 //identify();
     return 0;
 }

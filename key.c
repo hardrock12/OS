@@ -119,7 +119,7 @@ keyyed=1;
     }
 
 }
-void installkb()
+void install_kb()
 { // status();
 //outb(p60,0xED);
 //outb(p60,0x7);
@@ -141,12 +141,8 @@ register_interrupt_handler(IRQ1,key_handler);
 
 }
 static u8int checkstatus(u16int port,u8int bit)
-{u8int pow=1;
-while(bit>0)
 {
-pow*=2;
-}
-if((inb(port)&pow)==1)
+if((inb(port)>>bit)==1)
 {return 1;}
 else{return 0;}
 
