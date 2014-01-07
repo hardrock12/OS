@@ -26,7 +26,7 @@ i=0;
 
 while(i<32)
 {
-if((source>>i)&0X1==temp)
+if(((source>>i)&0X1)==temp)
 {
 monitor_write("doing layer :");
 //monitor_put('\n');
@@ -41,7 +41,7 @@ else{
 if (temp==1)
 {
 temp=0;
-marker++;
+
 
 }
 else
