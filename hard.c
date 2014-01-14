@@ -392,43 +392,20 @@ monitor_clear();
   int i=0;
   while(i<4)
   {outb(sec+i,0x0);i++;};
+  outb(0x3F6,0x12);
   outb(0x1F2,0xEC);
   int flag=0 ;
 
 
 
   monitor_write_hex(inb(0x1F7));
-  while(flag==0)
-  {
- if(1|| bitque(inb(0x1F7),0,7)&&(bitque(inb(0x1F7),0,3)||bitque(inb(0x1F7),0,0)))
+
+i=0;
+while(i<256)
 {
+   id[i]=inw(0x1F0);
 
- flag=1;}
- monitor_write("polling");
- };
-
-
-  //while(inb(0x1F7)!=8)//||flag++||inb(0x1F7)==1)
-  //{
-  monitor_write("waiting");
-
- // }
- // while(inb(0x1F7)!=1)//||flag++||inb(0x1F7)==1)
-  //{
- // monitor_write("waiting: for error flag");
- // }
-  //if (flag==0)
-  //monitor_clear();
-  i=0;
-  while(i<50){id[i]=inw(0x1F0);
-
-  monitor_put('     ');
-  monitor_write_dec(i);
-  monitor_put(':');
-  monitor_write_hex(id[i]);
-
-  i++;
-  }
-  monitor_write("done storing words");
-
+   monitor_write_hex(id[i]);
+   i++;
+}
 }

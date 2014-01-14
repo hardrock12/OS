@@ -36,11 +36,12 @@ install_kb();
 
 
 u32int foo=0x21F;
-monitor_write_dec((encode(foo,32)));
+/*monitor_write_dec((encode(foo,32)));
 s("                                            \n");
 monitor_write_dec(encode(encode(foo,32),32));
 s("                                            \n");
 monitor_write_dec(encode(encode(encode(foo,32),32),32));
-//identify();
+/*/
+identify();
     return 0;
 }
