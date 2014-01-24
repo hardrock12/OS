@@ -85,8 +85,7 @@ static u8int checkstatus(u16int port,u8int bit );
 void install_kb();
 
 static void key_handler(registers_t regs)
-{
-
+{monitor_write("got");
 keyyed=1;
 
     /* Read from the keyboard's data buffer */
@@ -116,6 +115,14 @@ keyyed=1;
         *  you would add 128 to the scancode when you look for it */
         //printchar(kbdus[scancode]);
         monitor_put(kbdus[scancode]);
+        if(kbdus[scancode]!='k'){
+getint(scancode);}
+else{
+getint(-1);
+
+}
+
+
     }
 
 }

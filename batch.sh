@@ -91,10 +91,12 @@ gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector -finlin
 
 echo "=================================================================================================================="
 gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector -finline-functions -nostdinc -fno-builtin -I./include -c -o runc.o runtimecoding.c
+echo "=================================================================================================================="
+gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector -finline-functions -nostdinc -fno-builtin -I./include -c -o coni.o coni.c
 echo "linking........."
 echo "=================================================================================================================="
-ld -T link.ld  -o ./iso/boot/kernel.bin start.o main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o key.o paging.o hard.o kheap.o ordered_array.o runc.o
-ld -T link.ld  -o kernel.bin start.o  main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o key.o paging.o kheap.o ordered_array.o hard.o runc.o
+ld -T link.ld  -o ./iso/boot/kernel.bin start.o main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o key.o paging.o coni.o hard.o kheap.o ordered_array.o runc.o
+ld -T link.ld  -o kernel.bin start.o  main.o monitor.o common.o descriptor_tables.o timer.o isr.o interrupt.o gdt.o mouse.o key.o paging.o kheap.o coni.o  ordered_array.o hard.o runc.o
 echo  "Running"
 qemu --kernel kernel.bin
 rm *.o

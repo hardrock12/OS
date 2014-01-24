@@ -15,33 +15,38 @@ int main(struct multiboot *mboot_ptr)
     init_descriptor_tables();
     // Initialise the screen (by clearing it)
     monitor_clear();
-    u32int a = kmalloc(8);
+
     initialise_paging();
 
-    u32int b = kmalloc(8);
-    u32int c = kmalloc(8);
-    monitor_write("a: ");
-    monitor_write_hex(a);
-    monitor_write(", b: ");
-    monitor_write_hex(b);
-    monitor_write("\nc: ");
-    monitor_write_hex(c);
+
 init_timer(50);
-    kfree(c);
-    kfree(b);
-    u32int d = kmalloc(12);
-    monitor_write(", d: ");
-    monitor_write_hex(d);
+
 install_kb();
 
 
-u32int foo=0x21F;
+//u32int foo=0x21F;
 /*monitor_write_dec((encode(foo,32)));
 s("                                            \n");
 monitor_write_dec(encode(encode(foo,32),32));
 s("                                            \n");
 monitor_write_dec(encode(encode(encode(foo,32),32),32));
 /*/
-identify();
+//identify();
+
+u32int com=0,dat=0;
+int flag=0;
+while(flag==0)
+
+{
+
+if(getstored()!=-1){
+monitor_write("command:");
+
+monitor_write_hex(getstored());
+}
+
+}
+
+
     return 0;
 }
