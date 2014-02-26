@@ -67,9 +67,9 @@ while(flag==0)
 {
 
 if(getstored()!=-1){
-monitor_write("command:");
+monitor_write("command:                           ");
 
-monitor_write_hex(getstored());
+//monitor_write_hex(getstored());
 }
 
 }
