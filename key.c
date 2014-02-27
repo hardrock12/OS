@@ -171,6 +171,17 @@ static  void DISABLEdevice(int x)
       }
 
 }
+/// writes configuratn
+void write_config(u8int config_byte)
+{
+outb(p64,0x60);
+outb(p60,config_byte);
+
+
+
+}
+
+
 u8int read_configura()
 {outb(p64,0x20);
 while(get_status_byte(0)!=1)

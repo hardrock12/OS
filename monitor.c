@@ -13,22 +13,26 @@ u8int cursor_y = 0;
 void pbyte(u8int s)
 {  int sf[]={0,0,0,0,0,0,0,0};
    int i=0;
-   while(s!=0)
-   { if(((s>>1)&0x1)==1)
+   while(s>>i!=0)
+   {
+
+
+    if(((s>>i)&0x1)==0x1)
+
          {sf[7-i]=1;}
-s=s>>1;
-         //i++;
+         //s=s>>1;
+         i++;
 
 
    }
+  // monitor_write_dec(sf[i])
    i=0;
    while (i<8)
-   {
-   if(sf[i]==1)
+   { if(sf[i]==1)
    {
    monitor_write('1');
 
-
+   monitor_write_dec(sf[i]);
    }
    else{
 

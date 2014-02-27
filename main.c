@@ -24,61 +24,23 @@ init_timer(50);
 install_kb();
 
 monitor_write("arjun");
-pbyte(0x2F);
+
 
 
 monitor_write(":                 ");
 
 pbyte(read_configura());
-//u32int foo=0x21F;
-/*monitor_write_dec((encode(foo,32)));
-s("                                            \n");
-monitor_write_dec(encode(encode(foo,32),32));
-s("                                            \n");
-monitor_write_dec(encode(encode(encode(foo,32),32),32));
-/*/
-//identify();
-
-/*u32int com=0,dat=0;
-int flag=0;
-int in=0;/*
-*//*
- while(in<10)
-{
-outb(0x60,0xED);
-
-monitor_write_hex(inb(0x60));
-monitor_write("\n");
-monitor_write_hex(inb(0x60));
-outb(0x60,0x0+(in%3));
+monitor_write("cx");
+pbyte(inb(0x60));
+monitor_write("config");
+pbyte(read_configura());
 
 
-}*/
+monitor_write("editing configuration file");
+write_config(read_configura()|0x8);
 
-
-/*
-outb(0x64,0x20);
-while(1)
-{
-
-if(inb(0x64)&&0x200)
-{
-monitor_write_hex(inb(0x60));
-
-}
-}
-
-
-while(flag==0)
-
-{
-
-if(getstored()!=-1){
-monitor_write("command:                           ");
-
-//monitor_write_hex(getstored());
-*/
-
+monitor_write("arjunDf:");
+pbyte(read_configura());
 
 
 
