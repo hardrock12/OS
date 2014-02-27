@@ -9,6 +9,44 @@ u16int *video_memory = (u16int *)0xB8000;
 // Stores the cursor position.
 u8int cursor_x = 0;
 u8int cursor_y = 0;
+// print bitsq
+void pbyte(u8int s)
+{  int sf[]={0,0,0,0,0,0,0,0};
+   int i=0;
+   while(s!=0)
+   { if(((s>>1)&0x1)==1)
+         {sf[7-i]=1;}
+s=s>>1;
+         //i++;
+
+
+   }
+   i=0;
+   while (i<8)
+   {
+   if(sf[i]==1)
+   {
+   monitor_write('1');
+
+
+   }
+   else{
+
+   monitor_put('0');
+
+   }
+
+   i++;
+
+
+
+
+   }
+
+
+
+}
+
 
 // Updates the hardware cursor.
 static void move_cursor()

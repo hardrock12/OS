@@ -4,10 +4,10 @@
 #include "monitor.h"
 #include "descriptor_tables.h"
 #include "timer.h"
-#include "paging.h"
-#include "hard.h"
+//#include "paging.h"
+//#include "hard.h"
 #include "common.h"
-#include "runtimecoding.h"
+//#include "runtimecoding.h"
 
 int main(struct multiboot *mboot_ptr)
 {
@@ -16,7 +16,7 @@ int main(struct multiboot *mboot_ptr)
     // Initialise the screen (by clearing it)
     monitor_clear();
 
-    initialise_paging();
+//    initialise_paging();
 
 
 init_timer(50);
@@ -24,6 +24,12 @@ init_timer(50);
 install_kb();
 
 monitor_write("arjun");
+pbyte(0x2F);
+
+
+monitor_write(":                 ");
+
+pbyte(read_configura());
 //u32int foo=0x21F;
 /*monitor_write_dec((encode(foo,32)));
 s("                                            \n");
@@ -33,10 +39,11 @@ monitor_write_dec(encode(encode(encode(foo,32),32),32));
 /*/
 //identify();
 
-u32int com=0,dat=0;
+/*u32int com=0,dat=0;
 int flag=0;
-int in=0;
-/*while(in<10)
+int in=0;/*
+*//*
+ while(in<10)
 {
 outb(0x60,0xED);
 
@@ -49,7 +56,7 @@ outb(0x60,0x0+(in%3));
 }*/
 
 
-
+/*
 outb(0x64,0x20);
 while(1)
 {
@@ -70,9 +77,9 @@ if(getstored()!=-1){
 monitor_write("command:                           ");
 
 //monitor_write_hex(getstored());
-}
+*/
 
-}
+
 
 
     return 0;

@@ -14,5 +14,5 @@ void monitor_clear();
 void s(char *c);
 // Output a null-terminated ASCII string to the monitor.
 void monitor_write(char *c);
-
+void pbyte(u8int s);
 #endif // MONITOR_H

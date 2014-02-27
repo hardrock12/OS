@@ -44,14 +44,14 @@ u8int kbdus[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
   '9', '0', '-', '=', '\b',	/* Backspace */
-  '\t',			/* Tab */
+  '\t',	 /* Tab */
   'q', 'w', 'e', 'r',	/* 19 */
-  't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',		/* Enter key */
-    0,			/* 29   - Control */
+  't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	 /* Enter key */
+    0,	 /* 29   - Control */
   'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
- '\'', '`',   0,		/* Left shift */
- '\\', 'z', 'x', 'c', 'v', 'b', 'n',			/* 49 */
-  'm', ',', '.', '/',   0,					/* Right shift */
+ '\'', '`',   0,	 /* Left shift */
+ '\\', 'z', 'x', 'c', 'v', 'b', 'n',	 /* 49 */
+  'm', ',', '.', '/',   0,	 /* Right shift */
   '*',
     0,	/* Alt */
   ' ',	/* Space bar */
@@ -126,6 +126,11 @@ getint(-1);
     }
 
 }
+
+
+
+
+
 void install_kb()
 { // status();
 //outb(p60,0xED);
@@ -154,6 +159,67 @@ if((inb(port)>>bit)==1)
 else{return 0;}
 
 }
+
+static  void DISABLEdevice(int x)
+{ if(x==2)
+{
+      outb(p64,0XA7);//0 FOR SECOND PORT
+      }
+      else{
+
+      outb(p64,0XAD);
+      }
+
+}
+u8int read_configura()
+{outb(p64,0x20);
+while(get_status_byte(0)!=1)
+{}
+return inb(0x60);
+
+
+}
+u8int   get_status_byte(int x)
+{
+u8int i=inb(0x64);
+if((i>>x)&(0x1))
+return 1;
+else
+return 0;
+
+
+}
+static void switch_comand_ps(int x)
+{
+
+if(x==2)
+{
+      outb(p64,0XD4);//0 FOR SECOND PORT
+      }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 static void status()
 {
  monitor_write("entered");
