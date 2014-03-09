@@ -30,16 +30,86 @@ None*/
 //None
 ///
 
+#define PIC1_CMD                    0x20
+#define PIC1_DATA                   0x21
+#define PIC2_CMD                    0xA0
+#define PIC2_DATA                   0xA1
+#define PIC_READ_IRR                0x0a    /* OCW3 irq ready next CMD read */
+#define PIC_READ_ISR                0x0b    /* OCW3 irq service next CMD read */
+ 
+ 
+ 
+#include "key.h"
+#include "common.h"
+#include "monitor.h"
+#include "isr.h"
+/* Helper func */
 
+
+// cleart mask
+
+
+
+void IRQ_set_mask(unsigned char IRQline) {
+    u16int port;
+    u8int value;
+ 
+    if(IRQline < 8) {
+        port = PIC1_DATA;
+    } else {
+        port = PIC2_DATA;
+        IRQline -= 8;
+    }
+    value = inb(port) | (1 << IRQline);
+    outb(port, value);        
+}
+ 
+void IRQ_clear_mask(unsigned char IRQline) {
+    u16int port;
+    u8int value;
+    
+ 
+    if(IRQline < 8) {
+        port = PIC1_DATA;
+    } else {
+        port = PIC2_DATA;
+        IRQline -= 8;
+    }
+    value = inb(port) & ~(1 << IRQline);
+    outb(port, value);        
+}
+
+
+//
+
+
+
+static u16int __pic_get_irq_reg(int ocw3)
+{
+    /* OCW3 to PIC CMD to get the register values.  PIC2 is chained, and
+     * represents IRQs 8-15.  PIC1 is IRQs 0-7, with 2 being the chain */
+    outb(PIC1_CMD, ocw3);
+    outb(PIC2_CMD, ocw3);
+    return (inb(PIC2_CMD) << 8) | inb(PIC1_CMD);
+}
+ 
+/* Returns the combined value of the cascaded PICs irq request register */
+u16int pic_get_irr(void)
+{
+    return __pic_get_irq_reg(PIC_READ_IRR);
+}
+ 
+/* Returns the combined value of the cascaded PICs in-service register */
+u16int pic_get_isr(void)
+{
+    return __pic_get_irq_reg(PIC_READ_ISR);
+}
 
 //static void status();
 
 
 
-#include "key.h"
-#include "common.h"
-#include "monitor.h"
-#include "isr.h"
+
 u8int kbdus[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
@@ -86,7 +156,7 @@ void install_kb();
 
 static void key_handler(registers_t regs)
 {
-monitor_write("asdjun");
+monitor_write("ar1:");
 
     /* Read from the keyboard's data buffer */
 
@@ -103,15 +173,15 @@ static void zer(registers_t regs)
 void installl_zero()
 {
   
-  register_interrupt_handler(0,zer);
+  register_interrupt_handler(0x0,&zer);
 }
 
 void install_kb()
 { // status();
 //outb(p60,0xED);
 //outb(p60,0x7);
-register_interrupt_handler(IRQ12,key_handler);
-monitor_write("Arjun?:");
+register_interrupt_handler(IRQ12,&key_handler);
+
 
 //u32int i;
 //for( i=20000;i>0;i--);
