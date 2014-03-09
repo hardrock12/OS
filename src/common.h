@@ -17,14 +17,6 @@ void outb(u16int port, u8int value);
 u8int inb(u16int port);
 u16int inw(u16int port);
 
-void memcpy(u8int *dest, const u8int *src, u32int len);
-
-// Write len copies of val into dest.
-void memset(u8int *dest, u8int val, u32int len);
-
-//extern u32int curdata;
-u8int  bitque(u32int data,const int sz,int check_bit);
-void wait(u32int m_sec);
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);
 #define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))
 

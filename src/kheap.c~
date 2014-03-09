@@ -26,6 +26,11 @@ u32int kmalloc_int(u32int sz, int align, u32int *phys)
         *phys = placement_address;
     }
     u32int tmp = placement_address;
+    monitor_write("allocating addr ");
+    monitor_write_hex(placement_address);
+    monitor_write(", ");
+    monitor_write_hex(sz);
+    monitor_write("\n");
     placement_address += sz;
     return tmp;
 }

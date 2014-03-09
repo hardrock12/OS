@@ -85,45 +85,10 @@ static u8int checkstatus(u16int port,u8int bit );
 void install_kb();
 
 static void key_handler(registers_t regs)
-{monitor_write("got");
-keyyed=1;
+{
+monitor_write("asdjun");
 
     /* Read from the keyboard's data buffer */
-    scancode = inb(0x60);
-
-
-    /* If the top bit of the byte we read from the keyboard is
-    *  set, that means that a key has just been released */
-    if (scancode & 0x80)
-    {
-        keyyed=0;/* You can use this one to see if the user released the
-        *  shift, alt, or control keys... */
-    }
-    else
-    {
-        /* Here, a key was just pressed. Please note that if you
-        *  hold a key down, you will get repeated key press
-        *  interrupts. */
-
-        /* Just to show you how this works, we simply translate
-        *  the keyboard scancode into an ASCII value, and then
-        *  display it to the screen. You can get creative and
-        *  use some flags to see if a shift is pressed and use a
-        *  different layout, or you can add another 128 entries
-        *  to the above layout to correspond to 'shift' being
-        *  held. If shift is held using the larger lookup table,
-        *  you would add 128 to the scancode when you look for it */
-        //printchar(kbdus[scancode]);
-        monitor_put(kbdus[scancode]);
-        if(kbdus[scancode]!='k'){
-getint(scancode);}
-else{
-getint(-1);
-
-}
-
-
-    }
 
 }
 
@@ -135,7 +100,7 @@ void install_kb()
 { // status();
 //outb(p60,0xED);
 //outb(p60,0x7);
-register_interrupt_handler(IRQ1,key_handler);
+register_interrupt_handler(IRQ12,key_handler);
 
 
 //u32int i;
@@ -182,6 +147,19 @@ outb(p60,config_byte);
 }
 
 
+
+
+// acknowledge
+ void ackk()
+{
+while(inb(0x60)!=ACK){}
+return;
+
+
+}
+
+
+
 u8int read_configura()
 {outb(p64,0x20);
 while(get_status_byte(0)!=1)
@@ -200,13 +178,9 @@ return 0;
 
 
 }
-static void switch_comand_ps(int x)
+ void switch_comand_ps()
 {
-
-if(x==2)
-{
-      outb(p64,0XD4);//0 FOR SECOND PORT
-      }
+    outb(p64,0XD4);//0 FOR SECOND PORT
 
 
 }
