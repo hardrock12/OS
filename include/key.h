@@ -2,6 +2,7 @@
 #define KEY_H_INCLUDED
 #include "common.h"
 void installkb();
+void installl_zero();
 u8int scancode;
 u8int keyyed;
 u8int read_configura();

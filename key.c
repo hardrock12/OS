@@ -94,14 +94,24 @@ monitor_write("asdjun");
 
 
 
-
+static void zer(registers_t regs)
+{
+  
+  monitor_write("divisin by zero"); 
+  
+}
+void installl_zero()
+{
+  
+  register_interrupt_handler(0,zer);
+}
 
 void install_kb()
 { // status();
 //outb(p60,0xED);
 //outb(p60,0x7);
 register_interrupt_handler(IRQ12,key_handler);
-
+monitor_write("Arjun?:");
 
 //u32int i;
 //for( i=20000;i>0;i--);
