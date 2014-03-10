@@ -18,5 +18,24 @@ void IRQ_set_mask(unsigned char IRQline) ;
 
  
 void IRQ_clear_mask(unsigned char IRQline);
+struct keydata {
+  char ch;
+  u8int keystate; //key press/release
+u8int ctrl_key_state;
+u8int ctrl_key_side;
+
+u8int key_togle_state; 
+
+}keys[300];
+
+struct vkeys {
+  
+char* name;
+u8int scancode;
+u8int side;
+char unicode;
+
+ 
+};
     
 #endif // KEY_H_INCLUDED

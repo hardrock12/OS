@@ -5,6 +5,8 @@
 #include "descriptor_tables.h"
 #include "timer.h"
 #include "key.h"
+#include "common.h"
+
 
 int main(struct multiboot *mboot_ptr)
 {
@@ -27,6 +29,5 @@ int main(struct multiboot *mboot_ptr)
     monitor_write_dec(x);
 install_kb();
 installl_zero();
-x/=0;
-    return 0;
+
 }
