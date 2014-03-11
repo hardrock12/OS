@@ -44,10 +44,20 @@ None*/
 #include "common.h"
 #include "monitor.h"
 #include "isr.h"
+#include "include/key.h"
 
 
 
 
+
+
+
+  
+  char ch[]={0,'1','2','3','4','5','6','7','8','9','0','-','=','\b'
+    ,'\t','q','w','e','r','t','y','u','i','o','p','[',']',0,
+    0,'a','s','d','f','g','h','j','k','l',';','\'',
+    '~',0,'\\','z','x','c','v','b','n','m',',','.','/',0,' ',0,0,0,0,0,0,0,0,0,0,0,0,0,'7'
+    ,'8','9','-','4','5','6','+','1','2','3','0','.',0,0};
 
 
 
@@ -220,11 +230,27 @@ Scan code	 Key	 Scan code	 Key	 Scan code	 Key	 Scan code	 Key
 
 static void key_handler(registers_t regs)
 {
-monitor_write("ar1:");
-monitor_write_hex(inb(p60));
-monitor_write("\n");
-monitor_write_hex(inb(p60));
+u16int scancode=0;
 
+scancode=inb(p60);
+
+int f=0,flag=0;
+while(f<300&&flag==0)
+{
+  if(keys[f].scancode==scancode)
+  {
+    monitor_put(keys[f].unicode);
+    flag=1;
+    return;
+  }
+  f++;
+  
+  
+}
+
+monitor_write("(none)");
+monitor_write_hex(scancode);
+return;
     /* Read from the keyboard's data buffer */
 
 }
@@ -248,12 +274,32 @@ void install_kb()
 //outb(p60,0xED);
 //outb(p60,0x7);
   
-  char ch[]={0,'1','2','3','4','5','6','7','8','9','0','-','=','\b','\t','q','w','e','r','t','y','u','i','o','p','[',']',0,0,'a','s','d','f','g','h','j','k','l',';','\'','~',0,'z','x','c','v','b','n','m',',','.','/',0,' '};;
-  
+ /* char ch[]={0,'1','2','3','4','5','6','7','8','9','0','-','=','\b'
+    ,'\t','q','w','e','r','t','y','u','i','o','p','[',']',0,
+    0,'a','s','d','f','g','h','j','k','l',';','\'',
+    '~',0,'z','x','c','v','b','n','m',',','.','/',0,' ',0,0,0,0,0,0,0,0,0,0,0,0,0,'7'
+    ,'8','9','-','4','5','6','+','1','2','3','0','.',0,0};
+  */
   
   
 register_interrupt_handler(IRQ1,&key_handler);
-
+int i=0x01;
+while(i<=0x58)
+{
+  keys[i].scancode=i;
+  keys[i].name=ch[i-1];
+   keys[i].unicode=ch[i-1];
+   
+  keys[0x80+i].name=ch[i-1];
+  keys[0x80+i].unicode=ch[i-1];
+  keys[i].scancode=0x80+i;
+  
+  
+  i++;
+  
+  
+  
+}
 
 //u32int i;
 //for( i=20000;i>0;i--);

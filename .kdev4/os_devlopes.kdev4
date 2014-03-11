@@ -2,7 +2,39 @@
 BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x00\x16\x00o\x00s\x00_\x00d\x00e\x00v\x00l\x00o\x00p\x00e\x00s\x00\x00\x00\x06\x00a\x00l\x00l)
 
 [Launch]
-Launch Configurations=
+Launch Configurations=Launch Configuration 0,Launch Configuration 1
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=scriptAppLauncher
+Name=New Script Application Launcher
+Type=Script Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=v
+EnvironmentGroup=default
+Executable=file:///home/arjun/os_devlopes/Makefile
+Execute on Remote Host=false
+Interpreter=make
+Output Filtering Mode=0
+Remote Host=
+Working Directory=
+
+[Launch][Launch Configuration 1]
+Configured Launch Modes=execute
+Configured Launchers=scriptAppLauncher
+Name=New Script Application Launcher (2)
+Type=Script Application
+
+[Launch][Launch Configuration 1][Data]
+Arguments=q
+EnvironmentGroup=default
+Executable=file:///home/arjun/os_devlopes/Makefile
+Execute on Remote Host=false
+Interpreter=make
+Output Filtering Mode=0
+Remote Host=
+Working Directory=
 
 [Project]
 VersionControlSupport=kdevgit

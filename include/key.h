@@ -26,7 +26,7 @@ u8int ctrl_key_side;
 
 u8int key_togle_state; 
 
-}keys[300];
+};
 
 struct vkeys {
   
@@ -36,6 +36,6 @@ u8int side;
 char unicode;
 
  
-};
+}keys[300];
     
 #endif // KEY_H_INCLUDED
