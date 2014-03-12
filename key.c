@@ -48,15 +48,22 @@ None*/
 
 
 
+  /*
+ 
+  
+  
+/*};*/
 
 
 
-
+u8int lockstogglestate;
+u8int ctrl_key_state;
+u8int ctrl_key_side;
   
   char ch[]={0,'1','2','3','4','5','6','7','8','9','0','-','=','\b'
     ,'\t','q','w','e','r','t','y','u','i','o','p','[',']',0,
     0,'a','s','d','f','g','h','j','k','l',';','\'',
-    '~',0,'\\','z','x','c','v','b','n','m',',','.','/',0,' ',0,0,0,0,0,0,0,0,0,0,0,0,0,'7'
+    '~',0,'\\','z','x','c','v','b','n','m',',','.','/',0,'*',0,' ',0,0,0,0,0,0,0,0,0,0,0,0,0,'7'
     ,'8','9','-','4','5','6','+','1','2','3','0','.',0,0};
 
 
@@ -226,6 +233,8 @@ Scan code	 Key	 Scan code	 Key	 Scan code	 Key	 Scan code	 Key
 
 
 
+struct keydata  keyfromkeybor;
+
 
 
 static void key_handler(registers_t regs)
@@ -235,18 +244,79 @@ u16int scancode=0;
 scancode=inb(p60);
 
 int f=0,flag=0;
+
+if(scancode==0xE0)
+{
+  
+  u16int scancode2=(0x60);
+  
+  keyfromkeybor.ch=0;
+  keyfromkeybor.ctrl_key_side=ctrl_key_state;
+  keyfromkeybor.ctrl_key_side=ctrl_key_side;
+  keyfromkeybor.key_togle_state=key_togle_state;
+
+  
+  
+ // 0x9c 0xdd
+  
+  if(scancode2>0x9c&&scancode2<0xdd)
+  {
+    
+    keyfromkeybor.keystate=0;
+     keyfromkeybor.special=scancode2+0x80;
+    
+  }
+  else{
+    keyfromkeybor.keystate=1;
+     keyfromkeybor.special=scancode2;
+  }
+  
+  // send keyboard packet
+  
+  
+  
+  
+  
+  
+}
 while(f<300&&flag==0)
 {
   if(keys[f].scancode==scancode)
-  {
-    monitor_put(keys[f].unicode);
-    flag=1;
-    return;
+  { 
+    
+    if(keys[f].unicode!=0)// not special keys
+    
+    {	keyfromkeybor.ch=keys[f].unicode;
+	  if(f<=0x58)
+		{keyfromkeybor.keystate=1;}
+	else	{keyfromkeybor.keystate=0;}
+	
+	
+	keyfromkeybor.key_togle_state=lockstogglestate;
+	keyfromkeybor.ctrl_key_state=ctrl_key_state;
+	keyfromkeybor.ctrl_key_side=ctrl_key_side;
+      
+      // send key data packet
+	return;
+    }
+	
+	
+	
+	
+    }
+    
+    
+    
+    
+    
+    
+    //monitor_put(keys[f].unicode);
+    
   }
   f++;
   
   
-}
+
 
 monitor_write("(none)");
 monitor_write_hex(scancode);
@@ -290,9 +360,9 @@ while(i<=0x58)
   keys[i].name=ch[i-1];
    keys[i].unicode=ch[i-1];
    
-  keys[0x80+i].name=ch[i-1];
-  keys[0x80+i].unicode=ch[i-1];
-  keys[i].scancode=0x80+i;
+  keys[0x58+i].name=ch[i-1];
+  keys[0x58+i].unicode=ch[i-1];
+  keys[0x58+i].scancode=0x80+i;
   
   
   i++;
