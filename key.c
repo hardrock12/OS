@@ -253,7 +253,7 @@ if(scancode==0xE0)
   keyfromkeybor.ch=0;
   keyfromkeybor.ctrl_key_side=ctrl_key_state;
   keyfromkeybor.ctrl_key_side=ctrl_key_side;
-  keyfromkeybor.key_togle_state=key_togle_state;
+  keyfromkeybor.key_togle_state=lockstogglestate;
 
   
   

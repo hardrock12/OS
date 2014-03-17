@@ -1,0 +1,2 @@
+import -window `xwininfo -name "unknown [Running] - Oracle VM VirtualBox" -display :0 | grep 'id: 0x' | grep -Eo '0x[a-z0-9]+'` screen.jpg
+wput -u screen.jpg ftp://a5975836:makeme1@rajagiri.comuf.com/public_html/ 
